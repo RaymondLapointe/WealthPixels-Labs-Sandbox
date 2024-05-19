@@ -14,3 +14,11 @@ Our mission is to democratize investing, starting with small investors who've be
 With years of experience in the Traditional Finance industry, we recognize that the type of Investment Management platform we are envisioning will require regulatory approvals to legally operate in the capital market jurisdictions we aim to serve. We put a lot of thought into the type of approach that will provide the smoothest path to regulatory approval, and we believe we found the right approach.
 
 This Github repository is to gather software components that help achieve this mission.
+
+
+#Clone the repo run commands:
+1. npm i
+2. npx hardhat test ./test/WealthToken.test.js //To Exececute the testcases
+
+//npx hardhat node --fork "https://mainnet.infura.io/v3/ad9a322ec8a34980b9f0c73a707aacf6"
+//npx hardhat test ./test/WealthToken.test.js

@@ -597,38 +597,34 @@ describe("WealthToken is [Ownable]", (accounts) => {
             // console.log("print amount 1",Number(event.args.amount));
             // console.log("print timestamp 1",Number(event.args.timestamp));
             let logData = {
-              component: null,
-              to: null,
-              amount: null,
-              timestamp: null,
-            }
-          
+              events: [] // Add an empty array to hold event objects
+            };
+            
             receipt.events.forEach((event) => {
               if (event.event === 'ComponentTransferred') {
-                //console.log(event.args);
-                console.log("Print component 1", event.args.component);
-                console.log("Print to 1", event.args.to);
-                console.log("Print amount 1", Number(event.args.amount));
-                console.log("Print timestamp 1", Number(event.args.timestamp));
-                console.log('Log saved to Firestore:1', logData);
-                logData.component =  event.args.component;
-                logData.to =  event.args.to;
-                logData.amount = Number(event.args.amount);
-                logData.timestamp = Number(event.args.timestamp);
-                
+                // Create an event object with the current event's details
+                const currentEvent = {
+                  component: event.args.component,
+                  to: event.args.to,
+                  amount: Number(event.args.amount),
+                  timestamp: Number(event.args.timestamp)
+                };
+            
+                // Push the current event object into the events array
+                logData.events.push(currentEvent);
+            
+                // Log the current state of logData to see the accumulated events
+                console.log('Accumulated Events:', logData.events);
               }
-             
-              
-             
-              // } catch (error) {
-              //   console.error('Error saving log to Firestore:', error);
-              // }
-                
-               
             });
-           
-            await db.collection('ComponentTransferred').add(logData);
-            console.log('Log saved to Firestore:', logData);
+            
+            // After processing all events, save the entire logData object to Firestore
+            try {
+              await db.collection('ComponentTransferred').add(logData);
+              console.log('All logs saved to Firestore:', logData);
+            } catch (error) {
+              console.error('Error saving logs to Firestore:', error);
+            }
 
             daiBal = await daiConInstance.balanceOf(
               investor1.address

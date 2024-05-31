@@ -7,6 +7,21 @@ const {
   abi: WEALTHTOKEN_ABI,
 } = require("../artifacts/contracts/WealthPixel/WealthToken.sol/WealthToken.json");
 const helpers = require("@nomicfoundation/hardhat-toolbox/network-helpers");
+
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccountKey.json');
+
+
+// Initialize Firebase
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://wealthpixel-a075d-default-rtdb.firebaseio.com"
+});
+
+const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
+
+
 const {
   // eslint-disable-next-line max-len
   ONEINCHEXCHANGE_ABI,
@@ -86,7 +101,7 @@ describe("WealthToken is [Ownable]", (accounts) => {
       WTOKEN_NAME,
       WTOKEN_SYMBOL
     );
-
+    console.log("wTokenConInstance+++++++++++++",wTokenConInstance.address);
     // MAINNET CONTRACT INSTANCES
     oneInchConInstance = await ethers.getContractAt(
       ONEINCHEXCHANGE_ABI,
@@ -455,7 +470,25 @@ describe("WealthToken is [Ownable]", (accounts) => {
 
       context("investor1 deposits 1000 usdt", () => {
         it("investor1 deposits 1000 usdt", async () => {
-          await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
+          const tx = await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
+          const receipt = await tx.wait();
+          // const event = receipt.events.find(e => e.event === 'ComponentTransferred');
+          // console.log(event.args);
+          // console.log("print component",event.args.component);
+          // console.log("print to",event.args.to);
+          // console.log("print amount",Number(event.args.amount));
+          // console.log("print timestamp",Number(event.args.timestamp));
+
+          receipt.events.forEach((event) => {
+            if (event.event === 'ComponentTransferred') {
+              //console.log(event.args);
+              console.log("Print component", event.args.component);
+              console.log("Print to", event.args.to);
+              console.log("Print amount", Number(event.args.amount));
+              console.log("Print timestamp", Number(event.args.timestamp));
+            }
+          });
+          
         });
         
         it("should check investor components balance is 0", async () => {
@@ -554,9 +587,50 @@ describe("WealthToken is [Ownable]", (accounts) => {
               (uTokProp) => Number(uTokProp._hex)
               );
                
-            await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
+            //await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
+            const tx = await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
+            const receipt = await tx.wait();
+            // const event = receipt.events.find(e => e.event === 'ComponentTransferred');
+            // console.log(event.args);
+            // console.log("print component 1",event.args.component);
+            // console.log("print to 1",event.args.to);
+            // console.log("print amount 1",Number(event.args.amount));
+            // console.log("print timestamp 1",Number(event.args.timestamp));
+            let logData = {
+              component: null,
+              to: null,
+              amount: null,
+              timestamp: null,
+            }
+          
+            receipt.events.forEach((event) => {
+              if (event.event === 'ComponentTransferred') {
+                //console.log(event.args);
+                console.log("Print component 1", event.args.component);
+                console.log("Print to 1", event.args.to);
+                console.log("Print amount 1", Number(event.args.amount));
+                console.log("Print timestamp 1", Number(event.args.timestamp));
+                console.log('Log saved to Firestore:1', logData);
+                logData.component =  event.args.component;
+                logData.to =  event.args.to;
+                logData.amount = Number(event.args.amount);
+                logData.timestamp = Number(event.args.timestamp);
+                
+              }
+             
+              
+             
+              // } catch (error) {
+              //   console.error('Error saving log to Firestore:', error);
+              // }
+                
+               
+            });
+           
+            await db.collection('ComponentTransferred').add(logData);
+            console.log('Log saved to Firestore:', logData);
 
-             daiBal = await daiConInstance.balanceOf(
+            daiBal = await daiConInstance.balanceOf(
               investor1.address
             );
              uniBal = await uniConInstance.balanceOf(

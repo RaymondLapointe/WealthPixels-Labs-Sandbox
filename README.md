@@ -22,9 +22,6 @@ This Github repository is to gather software components that help achieve this m
 3. Open a new Terminal
 4. Before proceeding, go to Node_modules>@openzeppelin>contracts>token>ERC20>IERC20.sol  and in there add the following lines after line 77
 
-"/**"
- "* @dev Returns the decimals places of the token."
- "*/"
  function decimals() external view returns (uint8);
 
 Then Save IERC20.sol ( Ctrl-S )

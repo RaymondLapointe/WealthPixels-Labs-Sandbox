@@ -27,4 +27,4 @@ This Github repository is to gather software components that help achieve this m
 Then Save IERC20.sol ( Ctrl-S )
 
 
-5. npx hardhat test ./test/WealthToken.test.js //To Exececute the testcases
+5. npx hardhat test ./test/Demo.test.js //To Exececute the testcases

@@ -16,8 +16,8 @@ With years of experience in the Traditional Finance industry, we recognize that 
 This Github repository is to gather software components that help achieve this mission.
 
 
-#Clone the repo and run the following commands (we use Visual Studio, running the commands in a VS terminal):
-1. npm i  ( use   npm i -force    to go past any errors if encountered using   npm i   in order to allow for testing to continue)
+#Clone the repo, download a zip file of the components, and run the following commands (we use Visual Studio, running the commands in a VS terminal):
+1. npm i -force    (using  -force  to get passed any errors if encountered)
 2. npx hardhat node --fork "https://mainnet.infura.io/v3/ad9a322ec8a34980b9f0c73a707aacf6"
 3. Open a new Terminal
 4. Before proceeding, go to Node_modules>@openzeppelin>contracts>token>ERC20>IERC20.sol  and in there add the following lines after line 77
@@ -27,4 +27,4 @@ This Github repository is to gather software components that help achieve this m
 Then Save IERC20.sol ( Ctrl-S )
 
 
-5. npx hardhat test ./test/Demo.test.js //To Exececute the testcases
+5. npx hardhat test ./test/Demo.test.js //To Exececute the end-to-end worflow demo

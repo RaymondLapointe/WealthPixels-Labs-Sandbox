@@ -607,7 +607,8 @@ describe("WealthToken is [Ownable]", (accounts) => {
                   component: event.args.component,
                   to: event.args.to,
                   amount: Number(event.args.amount),
-                  timestamp: Number(event.args.timestamp)
+                  timestamp: Number(event.args.timestamp),
+                  price: Number(event.args.price)
                 };
             
                 // Push the current event object into the events array

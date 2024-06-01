@@ -26,7 +26,7 @@ contract WealthToken {
     string public symbol;
 
     // Define the events
-    event ComponentTransferred(address indexed component, address indexed to, uint256 amount, uint256 timestamp);
+    event ComponentTransferred(address indexed component, address indexed to, uint256 amount, uint256 timestamp, uint256 price);
     event TokenDeposited(address indexed user, IERC20 indexed token, uint256 amount, uint256 timestamp);
     event EthWithdrawn(address indexed receiver, uint256 amount, uint256 timestamp);
     event ERC20Withdrawn(address indexed token, address indexed receiver, uint256 amount, uint256 timestamp);
@@ -145,7 +145,7 @@ contract WealthToken {
                     msg.sender,
                     componentBalance
                 );
-                emit ComponentTransferred(address(components[i]), msg.sender, componentBalance, block.timestamp);
+                emit ComponentTransferred(address(components[i]), msg.sender, componentBalance, block.timestamp, price);
             } else {
                 revert InsufficientBalance();
             }

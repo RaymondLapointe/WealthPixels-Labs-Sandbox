@@ -131,8 +131,6 @@ contract WealthToken {
         // Store investor info to contract storage
         investorInfo[msg.sender] = invInfo;
 
-        emit TokenDeposited(msg.sender, _inputToken, _amount, block.timestamp);
-
         uint256 price;
         uint256 decimals;
         

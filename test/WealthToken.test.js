@@ -579,23 +579,9 @@ describe("WealthToken is [Ownable]", (accounts) => {
             console.log("retrievedComponentsProportions",retrievedComponentsProportions[1])
             console.log("retrievedComponentsProportions",retrievedComponentsProportions[0])
             
-            const componentsProportionsInDecimals = retrievedComponentsProportions.map(
-              (uTokProp) => Number(uTokProp._hex)
-              );
-
-            const getComponent = componentsProportions.map(
-              (uTokProp) => Number(uTokProp._hex)
-              );
-               
-            //await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
+         
             const tx = await wTokenConInstance.connect(investor1).depositToken(usdtConInstance.address, 1000000000);
             const receipt = await tx.wait();
-            // const event = receipt.events.find(e => e.event === 'ComponentTransferred');
-            // console.log(event.args);
-            // console.log("print component 1",event.args.component);
-            // console.log("print to 1",event.args.to);
-            // console.log("print amount 1",Number(event.args.amount));
-            // console.log("print timestamp 1",Number(event.args.timestamp));
             let logData = {
               events: [] // Add an empty array to hold event objects
             };

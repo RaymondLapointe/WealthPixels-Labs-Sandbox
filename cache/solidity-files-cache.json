@@ -80,8 +80,8 @@
       ]
     },
     "C:\\Users\\vivek\\OneDrive\\Desktop\\New folder\\WealthPixels-Labs-Sandbox\\contracts\\WealthPixel\\WealthToken.sol": {
-      "lastModificationDate": 1717164231660,
-      "contentHash": "bca4f3d1af4cb39abc456c7256c0bc97",
+      "lastModificationDate": 1717261870800,
+      "contentHash": "42e099554d0bc5722a7b4fc297bb380a",
       "sourceName": "contracts/WealthPixel/WealthToken.sol",
       "solcConfig": {
         "version": "0.8.4",

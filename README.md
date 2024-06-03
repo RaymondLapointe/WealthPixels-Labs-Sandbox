@@ -21,11 +21,14 @@ This Github repository is to gather software components that help achieve this m
 1. npm i -force    (using  -force  to get passed any errors if encountered)
 2. npx hardhat node --fork "https://mainnet.infura.io/v3/ad9a322ec8a34980b9f0c73a707aacf6"
 3. Open a new Terminal
-4. Before proceeding, go to Node_modules>@openzeppelin>contracts>token>ERC20>IERC20.sol  and in there add the following lines after line 77
+4. Before you run the Demo.test.js test script. there are 2 modifications that need to be made
+   (1) Go to Node_modules>@openzeppelin>contracts>token>ERC20>IERC20.sol  and in there add the following lines after line 77
 
- function decimals() external view returns (uint8);
+         function decimals() external view returns (uint8);
 
-Then Save IERC20.sol ( Ctrl-S )
+         Then Save IERC20.sol ( Ctrl-S )
 
+   (2) We need to provide you with a replacement "serviceAccountKey.json" file where our Firestore database credentials are stored, so that you can access our database as part of running the test script
+        Please contact us so we can provide this file to you
 
-5. npx hardhat test ./test/Demo.test.js //To Exececute the end-to-end worflow demo
+6. npx hardhat test ./test/Demo.test.js //To Exececute the end-to-end worflow demo
